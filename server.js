@@ -63,11 +63,19 @@ app.get('/api/games', async (req, res) => {
     });
   } catch (err) {
     console.error('failed to build games list:', err);
-    const upstream = /ESPN responded|abort/i.test(err.message);
-    res.status(upstream ? 502 : 500).json({
-      error: upstream ? 'Could not reach ESPN right now, try again in a moment.' : 'Something went wrong.',
-      detail: err.message,
-    });
+    let status = 500;
+    let message = 'Something went wrong on the server.';
+    if (err.name === 'AbortError') {
+      status = 504;
+      message = 'ESPN took too long to respond. Please try again.';
+    } else if (/ESPN responded/.test(err.message)) {
+      status = 502;
+      message = 'ESPN returned an error for that request. Please try again in a moment.';
+    } else if (err.code === 'ENOTFOUND' || err.code === 'ECONNREFUSED' || /fetch failed/i.test(err.message)) {
+      status = 502;
+      message = 'Could not reach ESPN. Check your internet connection and try again.';
+    }
+    res.status(status).json({ error: message, detail: err.message });
   }
 });
 

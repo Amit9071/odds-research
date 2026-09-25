@@ -7,47 +7,77 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Odds Research</h1>
-    <p class="sub">Day's games with ranking vs market check. Flag: <strong>Favorite Undervalued</strong></p>
-  </header>
+  <div class="page">
+    <header class="top">
+      <div>
+        <h1>Odds Research</h1>
+        <p class="sub">Compare each team's ranking against the market price and flag games where they disagree.</p>
+      </div>
+      <div class="mock-pill" title="Odds are generated locally for this prototype and are not from a sportsbook.">
+        Mock odds
+      </div>
+    </header>
 
-  <form id="controls">
-    <label>League
-      <select id="league"></select>
-    </label>
-    <label>Date
-      <input type="date" id="date">
-    </label>
-    <button type="submit">Load</button>
-    <span id="status" class="status"></span>
-  </form>
+    <form id="controls" class="controls">
+      <label>
+        <span>League</span>
+        <select id="league"></select>
+      </label>
+      <label>
+        <span>Date</span>
+        <input type="date" id="date" required>
+      </label>
+      <button type="submit" id="loadBtn">Load games</button>
+      <button type="button" id="todayBtn" class="ghost">Today</button>
+    </form>
 
-  <div class="banner">
-    Odds shown are <strong>MOCKED</strong>. They're generated locally for the prototype and are not from a sportsbook.
+    <section id="summary" class="summary" hidden>
+      <div class="stat"><span class="stat-n" id="statGames">0</span><span class="stat-l">games</span></div>
+      <div class="stat flagged"><span class="stat-n" id="statFlagged">0</span><span class="stat-l">flagged</span></div>
+      <div class="stat"><span class="stat-n" id="statDate">-</span><span class="stat-l">date (ET)</span></div>
+      <div id="warn" class="warn" hidden></div>
+    </section>
+
+    <section id="loading" class="state" hidden>
+      <div class="spinner"></div>
+      <p>Fetching games from ESPN…</p>
+    </section>
+
+    <section id="empty" class="state" hidden>
+      <div class="state-icon">📅</div>
+      <h2>No games on this day</h2>
+      <p id="emptyMsg">Try another date, or switch league. NFL games are mostly on Sundays.</p>
+    </section>
+
+    <section id="error" class="state error" hidden>
+      <div class="state-icon">⚠️</div>
+      <h2>Couldn't load games</h2>
+      <p id="errorMsg"></p>
+      <button type="button" id="retryBtn">Try again</button>
+    </section>
+
+    <div id="tableWrap" class="table-wrap" hidden>
+      <table id="games">
+        <thead>
+          <tr>
+            <th>Time (ET)</th>
+            <th>Matchup</th>
+            <th>Ranked favourite</th>
+            <th>Moneyline</th>
+            <th>Implied win %</th>
+            <th>Flag</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <footer class="legend">
+      <p><span class="swatch"></span> <strong>Favorite Undervalued</strong> – the higher-ranked team is priced as the underdog.</p>
+      <p>Ranking = win% from ESPN standings, point differential breaks ties. Implied % has the bookmaker's vig removed so both sides add to 100.</p>
+      <p>Odds are <strong>mocked</strong> for this prototype and are not from a real sportsbook.</p>
+    </footer>
   </div>
-
-  <div id="summary" class="summary"></div>
-
-  <table id="games">
-    <thead>
-      <tr>
-        <th>Time (ET)</th>
-        <th>Away</th>
-        <th>Home</th>
-        <th>Ranked fav</th>
-        <th>Moneyline (mock)</th>
-        <th>Implied win %</th>
-        <th>Flag</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <p class="note">
-    Ranking = win% from ESPN standings, point differential breaks ties.
-    Implied % has the bookmaker's vig removed so the two sides add to 100.
-  </p>
 
   <script src="app.js"></script>
 </body>
