@@ -1,10 +1,8 @@
 const { impliedProbabilities } = require('./odds');
 
-/**
- * Decide which side is "higher ranked".
- * Win% first, point differential as the tiebreaker (early season everyone is 1-1).
- * Returns 'home' | 'away' | null (null = can't tell, e.g. missing data or dead tie).
- */
+// Decide which side is "higher ranked".
+// Win% first, point differential as the tiebreaker (early season everyone is 1-1).
+// Returns 'home' | 'away' | null (null = can't tell, e.g. missing data or dead tie).
 function higherRanked(home, away) {
   const h = home.rating || {};
   const a = away.rating || {};
@@ -18,11 +16,9 @@ function higherRanked(home, away) {
   return null;
 }
 
-/**
- * "Favorite Undervalued":
- * the higher-ranked team's odds imply a LOWER win probability than the
- * lower-ranked opponent's.
- */
+// "Favorite Undervalued":
+// the higher-ranked team's odds imply a LOWER win probability than the
+// lower-ranked opponent's.
 function favoriteUndervalued(game, odds) {
   const favSide = higherRanked(game.home, game.away);
   const probs = impliedProbabilities(odds);

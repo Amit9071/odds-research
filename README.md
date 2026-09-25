@@ -1,4 +1,4 @@
-# Odds Research – "Favorite Undervalued" prototype
+# Odds Research - "Favorite Undervalued" prototype
 
 Small take-home prototype. Pulls a day's games for a league from ESPN, attaches a
 (mock) moneyline to each game, and flags the games where the market is pricing the
@@ -24,19 +24,19 @@ npm test
 
 ## What it does
 
-1. **Games + ranking** – `GET /api/games?league=nfl&date=YYYYMMDD` calls two public
+1. **Games + ranking** - `GET /api/games?league=nfl&date=YYYYMMDD` calls two public
    ESPN endpoints: the scoreboard for that day and the league standings. Each team
    gets a rating made of win% (from standings) with point differential as the
    tiebreaker. If standings are down, it falls back to the W-L record printed on
    the scoreboard and says so in the UI.
-2. **Odds** – there is no sportsbook feed in this prototype. `src/odds.js` builds a
+2. **Odds** - there is no sportsbook feed in this prototype. `src/odds.js` builds a
    mock moneyline per game, seeded from the game id so it's the same on every
    refresh, skewed toward the better team plus some noise so a handful of games
    come out "mispriced". The UI has a banner saying the odds are mocked.
-3. **Flag** – `src/flags.js`. Convert both moneylines to implied win probability,
+3. **Flag** - `src/flags.js`. Convert both moneylines to implied win probability,
    strip the vig so they sum to 1, and if the higher-ranked team's implied
    probability is lower than the opponent's, flag it as **Favorite Undervalued**.
-4. **UI** – one static page (`public/`) that renders the table. Flagged rows are
+4. **UI** - one static page (`public/`) that renders the table. Flagged rows are
    highlighted red with the reason shown.
 
 ## Layout
@@ -57,7 +57,7 @@ test/             unit tests for the odds maths and the flag logic
   the standings. It's simple, explainable, and available for every league on ESPN.
   Early in a season this is noisy (lots of 1-1 teams), which is exactly why the
   point-diff tiebreak is there. If two teams are still dead even, the game gets no
-  favourite and can't be flagged – it says "no clear ranking favourite".
+  favourite and can't be flagged - it says "no clear ranking favourite".
 - The flag compares *de-vigged* implied probabilities. With the vig left in, both
   sides of a pick'em would be over 50% and the comparison gets muddy.
 - Only moneyline is considered. Spreads/totals are out of scope.

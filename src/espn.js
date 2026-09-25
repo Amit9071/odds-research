@@ -46,10 +46,8 @@ function statValue(stats, name) {
   return s && typeof s.value === 'number' ? s.value : null;
 }
 
-/**
- * Returns a map of teamId -> { winPct, pointDiff, wins, losses }
- * Empty map on failure - caller decides what to do with missing ratings.
- */
+// Returns a map of teamId -> { winPct, pointDiff, wins, losses }
+// Empty map on failure - caller decides what to do with missing ratings.
 async function fetchStandings(leagueKey) {
   const data = await getJson(standingsUrl(leagueKey));
   const map = {};

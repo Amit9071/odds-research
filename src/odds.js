@@ -42,11 +42,9 @@ function americanToImplied(line) {
   return 100 / (line + 100);
 }
 
-/**
- * Build a mock moneyline for one game.
- * homeEdge is our guess of the home team's "true" win prob from ratings (0..1),
- * or null when we don't know - in which case it's a coin flip plus noise.
- */
+// Build a mock moneyline for one game.
+// homeEdge is our guess of the home team's "true" win prob from ratings (0..1),
+// or null when we don't know - in which case it's a coin flip plus noise.
 function mockLine(game, homeEdge) {
   const rnd = seeded(hash(String(game.id)));
   const base = homeEdge == null ? 0.5 : homeEdge;
@@ -67,10 +65,8 @@ function mockLine(game, homeEdge) {
   };
 }
 
-/**
- * Turn a moneyline pair into implied win probabilities, with the vig
- * stripped out so the two numbers add to 1.
- */
+// Turn a moneyline pair into implied win probabilities, with the vig
+// stripped out so the two numbers add to 1.
 function impliedProbabilities(odds) {
   const h = americanToImplied(odds.home);
   const a = americanToImplied(odds.away);
