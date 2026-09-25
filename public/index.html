@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Odds Research - Favorite Undervalued</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Odds Research</h1>
+    <p class="sub">Day's games with ranking vs market check. Flag: <strong>Favorite Undervalued</strong></p>
+  </header>
+
+  <form id="controls">
+    <label>League
+      <select id="league"></select>
+    </label>
+    <label>Date
+      <input type="date" id="date">
+    </label>
+    <button type="submit">Load</button>
+    <span id="status" class="status"></span>
+  </form>
+
+  <div class="banner">
+    Odds shown are <strong>MOCKED</strong>. They're generated locally for the prototype and are not from a sportsbook.
+  </div>
+
+  <div id="summary" class="summary"></div>
+
+  <table id="games">
+    <thead>
+      <tr>
+        <th>Time (ET)</th>
+        <th>Away</th>
+        <th>Home</th>
+        <th>Ranked fav</th>
+        <th>Moneyline (mock)</th>
+        <th>Implied win %</th>
+        <th>Flag</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <p class="note">
+    Ranking = win% from ESPN standings, point differential breaks ties.
+    Implied % has the bookmaker's vig removed so the two sides add to 100.
+  </p>
+
+  <script src="app.js"></script>
+</body>
+</html>
